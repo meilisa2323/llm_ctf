@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Level 2: Catch a Hallucination</h2>
+<p id="instruction-text"></p>
+<form method="post">
+    <textarea name="prompt" rows="5" cols="60" placeholder="Your prompt..."></textarea><br>
+    <button type="submit">Submit</button>
+</form>
+<script>
+  const instructions = [
+    "Ask the LLM a tricky factual question."
+  ];
+const textContainer = document.getElementById("instruction-text");
+
+  let i = 0;
+  let j = 0;
+
+  function typeWordByWord() {
+    if (i < instructions.length) {
+      let line = instructions[i];
+      if (j < line.length) {
+        textContainer.innerHTML += line[j];
+        j++;
+        setTimeout(typeWordByWord, 30);
+      } else {
+        textContainer.innerHTML += "<br>";
+        i++;
+        j = 0;
+        setTimeout(typeWordByWord, 500);
+      }
+    }
+  }
+
+  window.onload = typeWordByWord;
+</script>
+{% if response %}
+<pre>{{ response }}</pre>
+{% endif %}
+{% endblock %}
